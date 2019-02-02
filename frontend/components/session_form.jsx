@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class SessionForm extends React.Component {
   constructor(props) {
@@ -7,6 +8,9 @@ class SessionForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.notThisFormLink = this.notThisFormLink.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSessionSubmissionResponse = this.handleSessionSubmissionResponse.bind(
+      this
+    );
 
     this.state = {
       username: "",
@@ -38,7 +42,7 @@ class SessionForm extends React.Component {
   handleSessionSubmissionResponse() {
     if (this.props.errors.length === 0) {
       if (this.props.currentUserId !== null) {
-        this.props.closeModal();
+        this.props.history.push(`/chats`);
       }
     }
   }
@@ -51,29 +55,21 @@ class SessionForm extends React.Component {
     const currentErrors = this.props.errors.map((error, idx) => {
       return <li key={idx}>{error}</li>;
     });
-    return <ul className="form-errors">{currentErrors}</ul>;
+    return <ul className="errors-list">{currentErrors}</ul>;
   }
 
   notThisFormLink() {
     if (this.props.formType === "login") {
       return (
-        <p
-          onClick={() => {
-            this.props.openModal("signup");
-          }}
-        >
-          New to ChatApp?{" "}
-          <span className="clickable-text">Create an Account</span>
+        <p>
+          Don't have an account yet? <Link to="/signup">Sign up</Link> today,
+          and start chatting!
         </p>
       );
     }
     return (
-      <p
-        onClick={() => {
-          this.props.openModal("login");
-        }}
-      >
-        <span className="clickable-text">Login</span>
+      <p>
+        Already have an account?&nbsp;<Link to="/login">Login here</Link>
       </p>
     );
   }
@@ -85,57 +81,37 @@ class SessionForm extends React.Component {
     }
 
     return (
-      <div>
-        <span className="session-form-modal">
-          <span
-            className="session-form-modal-screen"
-            onClick={() => {
-              this.props.closeModal();
-            }}
-          >
-            <span
-              className="session-form-modal-box"
-              onClick={e => {
-                e.stopPropagation();
-              }}
-            >
-              <span className="session-form">
-                <h2>{this.props.formTitle}</h2>
-                <ul>{this.errorsList()}</ul>
-                <form onSubmit={this.handleSubmit("user")}>
-                  <input
-                    type="text"
-                    placeholder="email"
-                    className={inputClass}
-                    value={this.state.username}
-                    onChange={this.handleChange("username")}
-                  />
-                  <br />
-                  <input
-                    type="password"
-                    placeholder="password"
-                    className={inputClass}
-                    value={this.state.password}
-                    onChange={this.handleChange("password")}
-                  />
-                  <br />
-                  <button className="session-form-modal-box-button">
-                    {this.props.formType}
-                  </button>
-                </form>
-                <form onSubmit={this.handleSubmit("demo")}>
-                  <button className="session-form-modal-box-button-demo">
-                    demo user
-                  </button>
-                </form>
-                {this.notThisFormLink()}
-              </span>
-            </span>
-          </span>
+      <div className="session-form">
+        <span>
+          <h2>{this.props.formTitle}</h2>
+          <ul>{this.errorsList()}</ul>
+          <form onSubmit={this.handleSubmit("user")}>
+            <input
+              type="text"
+              placeholder="email"
+              className={inputClass}
+              value={this.state.username}
+              onChange={this.handleChange("username")}
+            />
+            <br />
+            <input
+              type="password"
+              placeholder="password"
+              className={inputClass}
+              value={this.state.password}
+              onChange={this.handleChange("password")}
+            />
+            <br />
+            <button>{this.props.formType}</button>
+          </form>
+          <form onSubmit={this.handleSubmit("demo")}>
+            <button>demo user</button>
+          </form>
+          {this.notThisFormLink()}
         </span>
       </div>
     );
   }
 }
 
-export default SessionForm;
+export default withRouter(SessionForm);
