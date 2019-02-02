@@ -1,0 +1,14 @@
+.new-message-form {
+  z-index: 50px;
+  padding: 2px;
+  margin: 2px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background-color: var(--blue);
+}
+
+.message-index {
+  margin-bottom: 135px;
+}

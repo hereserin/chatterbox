@@ -1,0 +1,39 @@
+@media (max-width: 600px) {
+  .new-chat-button {
+    background-color: var(--blue);
+    border-radius: 35px;
+    z-index: 50px;
+    padding: 13px;
+    margin: 15px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+
+    transition: transform 1s;
+  }
+  .new-chat-button:active {
+    transform: scale(0.1);
+  }
+}
+
+.new-chat-form {
+  background: white;
+  height: 100%;
+  padding: 25px;
+}
+
+.hide-at-bottom {
+  display: none;
+}
+
+.show-from-bottom {
+  position: fixed;
+}
+
+.chat-index {
+  border: red;
+}
+
+.chat-index-item {
+  border: blue;
+}

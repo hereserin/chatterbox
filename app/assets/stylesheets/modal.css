@@ -1,0 +1,31 @@
+.modal-background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+}
+
+.modal-child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  height: 75%;
+  /* overflow: auto; */
+}
+
+.closing-x {
+  float: right;
+  size: 1.5em;
+  color: var(--eggplant);
+  background-color: var(--light-blue);
+  margin: 10px;
+  padding: 10px;
+  border-radius: 30px;
+  padding-right: 14px;
+  padding-left: 14px;
+}
