@@ -5,6 +5,11 @@ import { clearSortOrderIds } from "../actions/order_actions";
 import { connect } from "react-redux";
 
 const ChatIndexItem = props => {
+  const chatname = props.chatname[props.chatId]
+    ? props.chatname[props.chatId].chatroom_name
+    : "***Nuthin***";
+
+  console.log(props.chatId);
   return (
     <div
       className="chat-index-item"
@@ -15,14 +20,14 @@ const ChatIndexItem = props => {
         props.history.push(`/chats/${props.chatId}`);
       }}
     >
-      {props.chatname}
+      {chatname}
     </div>
   );
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    chatname: state.entities.chats[ownProps.chatId].chatroom_name
+    chatname: state.entities.chats
   };
   // chatId: state.entities.chats[ownProps.chatId].id
 };
