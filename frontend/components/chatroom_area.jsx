@@ -25,17 +25,12 @@ class ChatroomArea extends Component {
     this.props
       .fetchMessages(this.props.chatId)
       .then(() => this.setState({ chatLogs: this.mapMessagesToChatLog() }));
-    // .then(() => this.setState({ chatLogs: this.props.messages }));
-    // .then(chats => this.setState({ chats }));
 
-    this.props
-      .fetchChat(this.props.chatId)
-      .then(() =>
-        this.setState({
-          chatroomName: this.props.chats[this.props.chatId].chatroom_name
-        })
-      );
-    // );
+    this.props.fetchChat(this.props.chatId).then(() =>
+      this.setState({
+        chatroomName: this.props.chats[this.props.chatId].chatroom_name
+      })
+    );
   }
 
   mapMessagesToChatLog() {
@@ -118,20 +113,22 @@ class ChatroomArea extends Component {
     return (
       <div className="chatroom-area">
         <div className="stage">
-          <h1>Chat: {this.state.chatroomName}</h1>
+          <h1 className="chat-show-title">{this.state.chatroomName}</h1>
           <div className="chat-logs" />
           <ul className="chat-logs">{this.renderChatLog()}</ul>
-          <input
-            onKeyPress={e => this.handleChatInputKeyPress(e)}
-            value={this.state.currentChatMessage}
-            onChange={e => this.updateCurrentChatMessage(e)}
-            type="text"
-            placeholder="Send message..."
-            className="chat-input"
-          />
-          <button onClick={e => this.handleSendEvent(e)} className="send">
-            Send
-          </button>{" "}
+          <div className="chat-input-area">
+            <input
+              onKeyPress={e => this.handleChatInputKeyPress(e)}
+              value={this.state.currentChatMessage}
+              onChange={e => this.updateCurrentChatMessage(e)}
+              type="text"
+              placeholder="Send message..."
+              className="chat-input"
+            />
+            <button onClick={e => this.handleSendEvent(e)} className="send">
+              Send
+            </button>{" "}
+          </div>
         </div>
       </div>
     );
