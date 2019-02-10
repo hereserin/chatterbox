@@ -28,7 +28,7 @@ export const submitChat = chat => dispatch =>
 
 export const fetchChat = id => dispatch => {
   dispatch(startLoadingChat());
-  ChatAPIUtil.fetchChat(id).then(
+  return ChatAPIUtil.fetchChat(id).then(
     chat => dispatch(receiveChat(chat)),
     errors => dispatch(receiveChatErrors(errors))
   );

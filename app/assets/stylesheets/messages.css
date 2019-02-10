@@ -12,3 +12,42 @@
 .message-index {
   margin-bottom: 135px;
 }
+
+.message {
+  display: flex;
+  justify-content: space-between;
+}
+
+.message-created-at {
+  font-size: 12px;
+  text-align: center;
+}
+
+.message-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.message-user {
+  background-color: var(--orange-grey);
+  border-radius: 35px;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 13px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 15px;
+  margin-bottom: 2px;
+}
+
+.chat-message-container {
+  width: 85%;
+}
+
+.chat-message {
+  text-align: left;
+  padding-top: 30px;
+  padding-bottom: 5px;
+}

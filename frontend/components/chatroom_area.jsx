@@ -4,13 +4,15 @@ import { connect } from "react-redux";
 import Loader from "./loading_symbol";
 import { clearSortOrderIds } from "../actions/order_actions";
 import { fetchMessages } from "../actions/message_actions";
+import { fetchChat } from "../actions/chat_actions";
 
 class ChatroomArea extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentChatMessage: "",
-      chatLogs: []
+      chatLogs: [],
+      chatroomName: "* room name *"
     };
   }
 
@@ -25,6 +27,15 @@ class ChatroomArea extends Component {
       .then(() => this.setState({ chatLogs: this.mapMessagesToChatLog() }));
     // .then(() => this.setState({ chatLogs: this.props.messages }));
     // .then(chats => this.setState({ chats }));
+
+    this.props
+      .fetchChat(this.props.chatId)
+      .then(() =>
+        this.setState({
+          chatroomName: this.props.chats[this.props.chatId].chatroom_name
+        })
+      );
+    // );
   }
 
   mapMessagesToChatLog() {
@@ -83,8 +94,17 @@ class ChatroomArea extends Component {
       this.state.chatLogs.map(el => {
         return (
           <li key={`chat_${el.id}`}>
-            <span className="chat-message">{el.content}</span>
-            <span className="chat-created-at">{el.created_at}</span>
+            <div className="message">
+              <div className="message-info">
+                <span className="message-user">{el.user_id}</span>
+                <span className="message-created-at">
+                  {el.formatted_time}
+                </span>{" "}
+              </div>
+              <span className="chat-message-container">
+                <div className="chat-message">{el.content}</div>
+              </span>
+            </div>
           </li>
         );
       })
@@ -98,7 +118,7 @@ class ChatroomArea extends Component {
     return (
       <div className="chatroom-area">
         <div className="stage">
-          <h1>Chat</h1>
+          <h1>Chat: {this.state.chatroomName}</h1>
           <div className="chat-logs" />
           <ul className="chat-logs">{this.renderChatLog()}</ul>
           <input
@@ -106,7 +126,7 @@ class ChatroomArea extends Component {
             value={this.state.currentChatMessage}
             onChange={e => this.updateCurrentChatMessage(e)}
             type="text"
-            placeholder="Enter your message..."
+            placeholder="Send message..."
             className="chat-input"
           />
           <button onClick={e => this.handleSendEvent(e)} className="send">
@@ -124,12 +144,16 @@ const mapStateToProps = ({ order, ui, entities, session }, ownProps) => {
     loading: ui.loading.index,
     chatId: ownProps.match.params.chatId,
     currentUser: session.id,
-    messageIds: order
+    messageIds: order,
+    chats: entities.chats
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    fetchChat: chatId => {
+      return dispatch(fetchChat(chatId));
+    },
     fetchMessages: chatId => {
       return dispatch(fetchMessages(chatId));
     },

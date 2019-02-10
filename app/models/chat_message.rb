@@ -10,4 +10,8 @@ class ChatMessage < ApplicationRecord
   after_create_commit do
   ChatMessageCreationEventBroadcastJob.perform_later(self)
   end
+
+  def formatted_time
+    self.created_at.strftime('%H:%M')
+  end
 end
