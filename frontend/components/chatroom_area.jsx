@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import Cable from "actioncable";
+import { connect } from "react-redux";
+import Loader from "./loading_symbol";
+import { clearSortOrderIds } from "../actions/order_actions";
+import { fetchMessages } from "../actions/message_actions";
 
 class ChatroomArea extends Component {
   constructor(props) {
@@ -14,6 +18,22 @@ class ChatroomArea extends Component {
     this.createSocket();
   }
 
+  componentDidMount() {
+    this.props.clearSortOrderIds();
+    this.props
+      .fetchMessages(this.props.chatId)
+      .then(() => this.setState({ chatLogs: this.mapMessagesToChatLog() }));
+    // .then(() => this.setState({ chatLogs: this.props.messages }));
+    // .then(chats => this.setState({ chats }));
+  }
+
+  mapMessagesToChatLog() {
+    const mapped = this.props.messageIds.map(messageId => {
+      return this.props.messages[messageId];
+    });
+    return mapped;
+  }
+
   updateCurrentChatMessage(event) {
     this.setState({
       currentChatMessage: event.target.value
@@ -22,7 +42,11 @@ class ChatroomArea extends Component {
 
   handleSendEvent(event) {
     event.preventDefault();
-    this.chats.create(this.state.currentChatMessage);
+    this.chats.create({
+      chat_id: this.props.match.params.chatId,
+      content: this.state.currentChatMessage,
+      user_id: this.props.currentUser
+    });
     this.setState({
       currentChatMessage: ""
     });
@@ -47,24 +71,27 @@ class ChatroomArea extends Component {
           chatLogs.push(data);
           this.setState({ chatLogs: chatLogs });
         },
-        create: function(chatContent) {
-          this.perform("create", {
-            content: chatContent
-          });
+        create: function(chatMessage) {
+          this.perform("create", chatMessage);
         }
       }
     );
   }
 
   renderChatLog() {
-    return this.state.chatLogs.map(el => {
-      return (
-        <li key={`chat_${el.id}`}>
-          <span className="chat-message">{el.content}</span>
-          <span className="chat-created-at">{el.created_at}</span>
-        </li>
-      );
-    });
+    const chatLog = this.state.chatLogs ? (
+      this.state.chatLogs.map(el => {
+        return (
+          <li key={`chat_${el.id}`}>
+            <span className="chat-message">{el.content}</span>
+            <span className="chat-created-at">{el.created_at}</span>
+          </li>
+        );
+      })
+    ) : (
+      <li>no messages yet</li>
+    );
+    return chatLog;
   }
 
   render() {
@@ -91,4 +118,28 @@ class ChatroomArea extends Component {
   }
 }
 
-export default ChatroomArea;
+const mapStateToProps = ({ order, ui, entities, session }, ownProps) => {
+  return {
+    messages: entities.messages,
+    loading: ui.loading.index,
+    chatId: ownProps.match.params.chatId,
+    currentUser: session.id,
+    messageIds: order
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchMessages: chatId => {
+      return dispatch(fetchMessages(chatId));
+    },
+    clearSortOrderIds: () => {
+      return dispatch(clearSortOrderIds());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ChatroomArea);

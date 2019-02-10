@@ -9,14 +9,12 @@ const ChatIndexItem = props => {
     ? props.chatname[props.chatId].chatroom_name
     : "***Nuthin***";
 
-  console.log(props.chatId);
   return (
     <div
       className="chat-index-item"
       onClick={() => {
         props.clearSortOrderIds();
         props.handleClick(props.chatId);
-        // props.fetchChat(props.chatId);
         props.history.push(`/chats/${props.chatId}`);
       }}
     >
@@ -29,7 +27,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     chatname: state.entities.chats
   };
-  // chatId: state.entities.chats[ownProps.chatId].id
 };
 
 const mapDispatchToProps = dispatch => {

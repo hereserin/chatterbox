@@ -22,7 +22,8 @@ class NewMessageForm extends React.Component {
   handleSubmit() {
     const newMessage = {
       chat_id: this.props.match.params.chatId,
-      body: this.state.newMessageBody
+      content: this.state.newMessageBody,
+      user_id: this.props.currentUser
     };
 
     this.setState({ newMessageBody: "" });
@@ -63,7 +64,8 @@ class NewMessageForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    errors: state.errors.message
+    errors: state.errors.message,
+    currentUser: state.session.id
   };
 };
 

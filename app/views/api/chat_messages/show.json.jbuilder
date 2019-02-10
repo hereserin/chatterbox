@@ -1,6 +1,6 @@
 
 json.message do
-      json.extract! @message, :id, :created_at, :body, :user_id
+      json.extract! @message, :id, :created_at, :content, :user_id
 end
 
 json.user do
