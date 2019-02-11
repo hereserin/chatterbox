@@ -25,6 +25,10 @@
     "lib": "lib",
     "test": "test"
   },
+  "engines": {
+    "node": "8.4.0",
+    "npm": "6.1.0"
+  },
   "scripts": {
     "webpack": "webpack --watch --mode=development",
     "postinstall": "webpack --mode=production"
