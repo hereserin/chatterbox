@@ -29,21 +29,21 @@ class ChatIndex extends React.Component {
     this.setState({ activeConversation: id });
   }
 
-  handleReceivedChat(response) {
-    console.log("RECEIVED CHAT");
-    const { chat } = response;
-    this.setState({
-      chats: [...this.state.chats, chat]
-    });
-  }
-
-  handleReceivedMessage(response) {
-    //   const { message } = response;
-    //   const chats = [...this.state.chats];
-    //   const chat = chats.find(chat => chat.id === message.chat_id);
-    //   chat.messages = [...chat.messages, message];
-    //   this.setState({ chats });
-  }
+  // handleReceivedChat(response) {
+  //   console.log("RECEIVED CHAT");
+  //   const { chat } = response;
+  //   this.setState({
+  //     chats: [...this.state.chats, chat]
+  //   });
+  // }
+  //
+  // handleReceivedMessage(response) {
+  //   //   const { message } = response;
+  //   //   const chats = [...this.state.chats];
+  //   //   const chat = chats.find(chat => chat.id === message.chat_id);
+  //   //   chat.messages = [...chat.messages, message];
+  //   //   this.setState({ chats });
+  // }
 
   composeListItems() {
     const chatListItems = this.props.chatIds.map(chatId => {

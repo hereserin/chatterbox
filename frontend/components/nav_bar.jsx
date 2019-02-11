@@ -5,7 +5,12 @@ import { logout } from "./../actions/session_actions";
 const NavBar = props => {
   return (
     <nav>
-      <div onClick={props.logout}>
+      <div
+        onClick={() => {
+          props.logout();
+          props.history.push(`/login`);
+        }}
+      >
         <i className="fas fa-bars" />
       </div>
       <div
