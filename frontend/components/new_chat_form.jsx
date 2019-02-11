@@ -42,21 +42,20 @@ class NewChatForm extends React.Component {
   }
 
   showErrors() {
-    if (this.props.errors) {
-      const errorsList = this.props.errors.forEach(error => {
-        return <li>error</li>;
-      });
-      return <ol>{errorsList}</ol>;
-    } else {
-      return null;
-    }
+    // if (this.props.errors) {
+    //   const errorsList = this.props.errors.forEach(error => {
+    //     return <li>error</li>;
+    //   });
+    //   return <ol>{errorsList}</ol>;
+    // } else {
+    //   return null;
+    // }
   }
 
   render() {
     return (
       <div className="new-chat-form">
         Start a Chat
-        {this.showErrors()}
         <span>
           <input
             type="text"
