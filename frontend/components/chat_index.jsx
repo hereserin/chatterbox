@@ -69,8 +69,7 @@ class ChatIndex extends React.Component {
 
     return (
       <div>
-        <h3> --original list-- </h3>
-        <ul className="chat-index">{this.composeListItems()}</ul>;)
+        <ul className="chat-index">{this.composeListItems()}</ul>
       </div>
     );
   }
