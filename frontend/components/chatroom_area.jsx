@@ -31,6 +31,15 @@ class ChatroomArea extends Component {
         chatroomName: this.props.chats[this.props.chatId].chatroom_name
       })
     );
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
   mapMessagesToChatLog() {
@@ -114,8 +123,15 @@ class ChatroomArea extends Component {
       <div className="chatroom-area">
         <div className="stage">
           <h1 className="chat-show-title">{this.state.chatroomName}</h1>
-          <div className="chat-logs" />
-          <ul className="chat-logs">{this.renderChatLog()}</ul>
+          <div className="chat-logs-container">
+            <ul className="chat-logs">{this.renderChatLog()}</ul>
+            <div
+              style={{ float: "left", clear: "both" }}
+              ref={el => {
+                this.messagesEnd = el;
+              }}
+            />
+          </div>
           <div className="chat-input-area">
             <input
               onKeyPress={e => this.handleChatInputKeyPress(e)}

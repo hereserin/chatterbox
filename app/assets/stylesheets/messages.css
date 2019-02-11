@@ -67,4 +67,10 @@
   bottom: 0;
   right: 0;
   z-index: 50px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.chat-logs {
+  padding-bottom: 125px;
 }
