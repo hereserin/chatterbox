@@ -142,7 +142,7 @@ class ChatroomArea extends Component {
               className="chat-input"
             />
             <button onClick={e => this.handleSendEvent(e)} className="send">
-              Send
+              <i class="fas fa-paper-plane" />
             </button>{" "}
           </div>
         </div>
