@@ -10,10 +10,11 @@ import { ActionCableProvider } from "react-actioncable-provider";
 // const cable = ActionCable.createConsumer('ws://test.example.com/cable');
 
 // <ActionCableProvider cable={cable}>...</ActionCableProvider>;
+// <ActionCableProvider url={"ws://localhost:3000/cable"}>
 
 const Root = ({ store }) => {
   return (
-    <ActionCableProvider url={"ws://localhost:3000/cable"}>
+    <ActionCableProvider url={"/cable"}>
       <Provider store={store}>
         <HashRouter>
           <App />
